@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مترجم</title>
+  <meta name="theme-color" content="#2196F3">
+  <link href="https://i.postimg.cc/wj2490Nj/IMG.jpg" rel="shortcut icon" type="image/x-icon">
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      text-align: center;
+      background-color: #f1f1f1;
+      direction: rtl;
+    }
+    .translator {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 20px;
+      width: 300px;
+      margin: 50px auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #2196F3;
+    }
+    textarea {
+      width: 80%;
+      height: 80px;
+      margin: 10px 0;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      cursor: pointer;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    button:hover {
+      background-color: #0b7dda;
+    }
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #565656;
+      color: #ffffff;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="translator">
+    <h1>مترجم</h1>
+    <div>
+      <select id="languageSelect1">
+        <option value="arabic">عربي</option>
+        <option value="hyperarabic">هيبرعلا</option>
+        <option value="encode">تشفير</option>
+      </select>
+      ←
+      <select id="languageSelect2">
+        <option value="arabic">عربي</option>
+        <option value="hyperarabic">هيبرعلا</option>
+        <option value="encode">تشفير</option>
+      </select>
+    </div>
+    <textarea id="text1" placeholder="اكتب النص هنا"></textarea><br>
+    <textarea id="text2" placeholder="الترجمة" readonly></textarea><br>
+    <button onclick="convertText()">تحويل</button>
+    <button onclick="copyText()">نسخ</button>
+    <button onclick="clearFields()">مسح</button>
+  </div>
+
+  <div class="footer">
+    تم صنع الصفحة من قبل <a href="https://coderinventor.github.io/social/" style="color: #ff0000; text-decoration: none;">coder inventor</a>
+  </div>
+
+  <script>
+    function convertText() {
+      var text = document.getElementById("text1").value;
+      var language1 = document.getElementById("languageSelect1").value;
+      var language2 = document.getElementById("languageSelect2").value;
+      var result = '';
+      
+      if (language1 === 'arabic' && language2 === 'hyperarabic') {
+
+        result = text.split('').reverse().join('');
+      } else if (language1 === 'hyperarabic' && language2 === 'arabic') {
+
+        result = text.split('').reverse().join('');
+      } else if (language1 === 'arabic' && language2 === 'encode') {
+
+        result = encodeURIComponent(text);
+      } else if (language1 === 'encode' && language2 === 'arabic') {
+
+        result = decodeURIComponent(text);
+      } else if (language1 === 'hyperarabic' && language2 === 'encode') {
+
+        result = hyperarabicToEncoded(text);
+      } else if (language1 === 'encode' && language2 === 'hyperarabic') {
+
+        result = encodedToHyperarabic(text);
+      } else if (language1 === language2) {
+
+        result = text;
+      }
+      
+      document.getElementById("text2").value = result;
+    }
+    
+    function copyText() {
+      var textToCopy = document.getElementById("text2");
+      textToCopy.select();
+      document.execCommand("copy");
+    }
+    
+    function clearFields() {
+      var confirmation = confirm("هل أنت متأكد من رغبتك في مسح الحقول؟");
+      if (confirmation) {
+        document.getElementById("text1").value = '';
+        document.getElementById("text2").value = '';
+      }
+    }
+
+    function hyperarabicToEncoded(text) {
+
+      return encodeURIComponent(text);
+    }
+
+    function encodedToHyperarabic(text) {
+
+      return decodeURIComponent(text);
+    }
+  </script>
+</body>
+</html>
+
